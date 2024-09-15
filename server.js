@@ -18,8 +18,7 @@ app.listen(PORT, () => {
 
 mongoose.connect(process.env.DATABASE_URL)
 
-const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
-
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_TEST);
 
 const personSchema = new mongoose.Schema({
     message: String
@@ -27,18 +26,66 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model("Person", personSchema)
 
-// const stripe = (process.env.STRIPE_PRIVATE_KEY)
 
 const storeItems = new Map([
     [1, {priceInCents: 10000, name: "Plant Hoodie"}],
     [2, {priceInCents: 20000, name: "Tree Hoodie"}],    
     ])
 
-    app.get('/', (req, res) => {
-        res.json({
-            message: "Cosmic Backend Working"
-        })
+    app.post('/create-checkout-session' , async (req, res) => {
+        try {
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                mode: 'payment',
+                line_items: req.body.items.map(item => {
+                    const storeItem = storeItems.get(item.id)
+                    return {
+                        price_data: {
+                            currency: 'TRY',
+                            product_data: {
+                                name: storeItem.name
+                            },
+                            unit_amount: storeItem.priceInCents
+                        },
+                        quantity: item.quantity,
+                    }
+                }),
+                success_url: `${process.env.SERVER_URL}/success.hmtl`,
+                cancel_url:  `${process.env.SERVER_URL}/cancel.hmtl`,
+            })
+            res.json({ url: session.url })
+        } catch (e) {
+            res.status(500).json({ error: e.message})
+        }
+        
     })
+
+    
+
+    app.get('/messages', async (req, res) => {
+        try {
+            const allPersons = await Person.find({})
+            res.json(allPersons)
+        } catch(e) {
+            console.error(e)
+        }
+    })
+
+    app.post('/messages/new', (req, res) => {
+        const person = req.body
+        const newPerson = new Person({
+            message: person.message,
+        })
+        newPerson.save()
+        .then(() => {
+            console.log("Person Saved")
+            res.sendStatus(200)
+        })
+        .catch(e => console.error(e))
+    })
+
+
+
     
     
     // app.post('/create-checkout-session', async (req, res) => {
