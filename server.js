@@ -28,8 +28,10 @@ const Person = mongoose.model("Person", personSchema)
 
 
 const storeItems = new Map([
-    [1, {priceInCents: 10000, name: "Plant Hoodie"}],
-    [2, {priceInCents: 20000, name: "Tree Hoodie"}],    
+    [1, {priceInCents: 3999, name: "Plant Hoodie"}],
+    [2, {priceInCents: 3999, name: "Green Hoodie"}],
+    [3, {priceInCents: 3999, name: "White Hoodie"}],
+    [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
     ])
 
     app.post('/create-checkout-session' , async (req, res) => {
@@ -50,8 +52,8 @@ const storeItems = new Map([
                         quantity: item.quantity,
                     }
                 }),
-                success_url: `${process.env.SERVER_URL}/success.hmtl`,
-                cancel_url:  `${process.env.SERVER_URL}/cancel.hmtl`,
+                success_url: `${process.env.FRONTEND_URL}/`,
+                cancel_url:  `${process.env.FRONTEND_URL}/`,
             })
             res.json({ url: session.url })
         } catch (e) {
@@ -83,11 +85,3 @@ const storeItems = new Map([
         })
         .catch(e => console.error(e))
     })
-
-
-
-    
-    
-    // app.post('/create-checkout-session', async (req, res) => {
-    //     res.json({ url: 'Hi' })
-    // }) 
