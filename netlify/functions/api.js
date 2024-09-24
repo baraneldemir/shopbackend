@@ -30,64 +30,64 @@ const Person = mongoose.model("Person", personSchema)
 
 const router = Router()
 
-const storeItems = new Map([
-    [1, {priceInCents: 3999, name: "Plant Hoodie"}],
-    [2, {priceInCents: 3999, name: "Green Hoodie"}],
-    [3, {priceInCents: 3999, name: "White Hoodie"}],
-    [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
-    ])
+// const storeItems = new Map([
+//     [1, {priceInCents: 3999, name: "Plant Hoodie"}],
+//     [2, {priceInCents: 3999, name: "Green Hoodie"}],
+//     [3, {priceInCents: 3999, name: "White Hoodie"}],
+//     [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
+//     ])
 
-    router.post('/create-checkout-session' , async (req, res) => {
-        try {
-            const session = await stripe.checkout.sessions.create({
-                payment_method_types: ['card'],
-                mode: 'payment',
-                line_items: req.body.items.map(item => {
-                    const storeItem = storeItems.get(item.id)
-                    return {
-                        price_data: {
-                            currency: 'TRY',
-                            product_data: {
-                                name: storeItem.name
-                            },
-                            unit_amount: storeItem.priceInCents
-                        },
-                        quantity: item.quantity,
-                    }
-                }),
-                success_url: `${process.env.FRONTEND_URL}/`,
-                cancel_url:  `${process.env.FRONTEND_URL}/`,
-            })
-            res.json({ url: session.url })
-        } catch (e) {
-            res.status(500).json({ error: e.message})
-        }
+    // router.post('/create-checkout-session' , async (req, res) => {
+    //     try {
+    //         const session = await stripe.checkout.sessions.create({
+    //             payment_method_types: ['card'],
+    //             mode: 'payment',
+    //             line_items: req.body.items.map(item => {
+    //                 const storeItem = storeItems.get(item.id)
+    //                 return {
+    //                     price_data: {
+    //                         currency: 'TRY',
+    //                         product_data: {
+    //                             name: storeItem.name
+    //                         },
+    //                         unit_amount: storeItem.priceInCents
+    //                     },
+    //                     quantity: item.quantity,
+    //                 }
+    //             }),
+    //             success_url: `${process.env.FRONTEND_URL}/`,
+    //             cancel_url:  `${process.env.FRONTEND_URL}/`,
+    //         })
+    //         res.json({ url: session.url })
+    //     } catch (e) {
+    //         res.status(500).json({ error: e.message})
+    //     }
         
-    })
+    // })
 
     
 
-    router.get('/messages', async (req, res) => {
-        try {
-            const allPersons = await Person.find({})
-            res.json(allPersons)
-        } catch(e) {
-            console.error(e)
-        }
-    })
+    // router.get('/messages', async (req, res) => {
+    //     try {
+    //         const allPersons = await Person.find({})
+    //         res.json(allPersons)
+    //     } catch(e) {
+    //         console.error(e)
+    //     }
+    // })
 
-    router.post('/messages/new', (req, res) => {
-        const person = req.body
-        const newPerson = new Person({
-            message: person.message,
-        })
-        newPerson.save()
-        .then(() => {
-            console.log("Person Saved")
-            res.sendStatus(200)
-        })
-        .catch(e => console.error(e))
-    })
+    // router.post('/messages/new', (req, res) => {
+    //     const person = req.body
+    //     const newPerson = new Person({
+    //         message: person.message,
+    //     })
+    //     newPerson.save()
+    //     .then(() => {
+    //         console.log("Person Saved")
+    //         res.sendStatus(200)
+    //     })
+    //     .catch(e => console.error(e))
+    // })
 
     api.use("/api/", router)
 
