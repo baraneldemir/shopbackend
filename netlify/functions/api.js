@@ -6,16 +6,8 @@ import Stripe from "stripe";
 import mongoose from "mongoose";
 import serverless from "serverless-http"
 
-import {accounts} from './routes/accounts.js'
-import {authenticate} from './routes/authenticate.js'
 
 
-export async function handler(event, context) {
-  
-  router.get('/accounts', accounts)
-  router.get('/authenticate', authenticate)
-
-}
 
 
 
