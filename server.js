@@ -50,7 +50,7 @@ const storeItems = new Map([
                     const storeItem = storeItems.get(item.id)
                     return {
                         price_data: {
-                            currency: 'TRY',
+                            currency: 'GBP',
                             product_data: {
                                 name: storeItem.name
                             },
