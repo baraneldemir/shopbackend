@@ -34,6 +34,13 @@ const storeItems = new Map([
     [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
     ])
 
+    app.get('/', (req, res) => {
+        res.json({
+            message: "Backend Working"
+        })
+    })
+    
+
     app.post('/create-checkout-session' , async (req, res) => {
         try {
             const session = await stripe.checkout.sessions.create({
