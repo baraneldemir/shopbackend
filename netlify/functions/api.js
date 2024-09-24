@@ -11,11 +11,9 @@ const api = express();
 api.use(cors());
 api.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 
-api.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-});
+
 
 mongoose.connect(process.env.DATABASE_URL)
 
@@ -35,6 +33,10 @@ const storeItems = new Map([
     [3, {priceInCents: 3999, name: "White Hoodie"}],
     [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
     ])
+
+    api.listen(port, () => {
+        console.log(`Server listening on ${port}`);
+    });
 
     router.post('/create-checkout-session' , async (req, res) => {
         try {
