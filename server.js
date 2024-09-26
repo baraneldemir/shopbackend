@@ -28,10 +28,19 @@ const Person = mongoose.model("Person", personSchema)
 
 
 const storeItems = new Map([
-    [1, {priceInCents: 3999, name: "Plant Hoodie"}],
-    [2, {priceInCents: 3999, name: "Green Hoodie"}],
-    [3, {priceInCents: 3999, name: "White Hoodie"}],
-    [4, {priceInCents: 2999, name: "Bronwish Hoodie"}]    
+    [1, {priceInCents: 999, name: "Plant Hoodie"}],
+    [2, {priceInCents: 999, name: "Green Hoodie"}],
+    [3, {priceInCents: 999, name: "White Hoodie"}],
+    [4, {priceInCents: 999, name: "Bronwish Hoodie"}],
+    [5, {priceInCents: 999, name: "White Hoodie"}],
+    [6, {priceInCents: 999, name: "Red Hoodie"}],
+    [7, {priceInCents: 999, name: "White Red Hoodie"}],
+    [8, {priceInCents: 999, name: "White Blue Hoodie"}],
+    [9, {priceInCents: 999, name: "White Brown Hoodie"}],
+    [10, {priceInCents: 999, name: "White Black Hoodie"}],
+    [11, {priceInCents: 999, name: "White Gray Hoodie"}],
+    [12, {priceInCents: 999, name: "White Plant Hoodie"}],
+    [13, {priceInCents: 999, name: "White Brownish Hoodie"}],    
     ])
 
     app.get('/', (req, res) => {
