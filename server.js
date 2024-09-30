@@ -41,7 +41,7 @@ const storeItems = new Map([
     [11, {priceInCents: 999, name: "White Gray Hoodie"}],
     [12, {priceInCents: 999, name: "White Plant Hoodie"}],
     [13, {priceInCents: 999, name: "White Brownish Hoodie"}],    
-    [13, {priceInCents: 999, name: "White Brownishs Hoodie"}]    
+    [14, {priceInCents: 999, name: "White Brownishs Hoodie"}]    
     ])
 
     app.get('/', (req, res) => {
